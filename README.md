@@ -3,6 +3,6 @@ This repository contains materials related to the BTP project we have done in ou
 
 Authors :
 
-19ucc023 - Mohit Akhouri
+19ucc023 - Mohit Akhouri \n
 19uec019 - Yagyik D. Prajapat
 19uec023 - Hitesh Goyal
