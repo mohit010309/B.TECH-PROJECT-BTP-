@@ -1,0 +1,26 @@
+program TrialDivision
+
+integer(kind=16) :: n,i,k,flag=1
+
+read*, n
+
+i = 2
+k = n**(0.5)
+
+loop: do while(i<=k)
+
+    if(mod(n,i) == 0) then
+        flag=0 
+        exit loop
+    endif
+    
+    i = i+1
+end do loop
+
+if(flag==1) then
+    print*,"The number is prime"
+else
+    print*,"The number is not prime"
+end if
+
+end program TrialDivision

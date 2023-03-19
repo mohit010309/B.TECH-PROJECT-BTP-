@@ -1,0 +1,60 @@
+function power(a,n,p) result(res)
+    
+    res = 1
+    a = mod(a,p)
+    
+    do while(n > 0)
+        
+        if(mod(n,2) .eq. 1) then
+            res = mod(res*a,p)
+            n = n - 1
+        else
+            a = mod((a**2),p)
+            n = n / 2
+            
+        end if
+        
+    end do
+
+    res= mod(res,p)
+    
+end function power
+    
+function isPrime(n,k) result(res)
+    integer, intent (in) :: n,k
+    integer :: res
+    real :: a
+    integer :: lr,rr 
+    
+    
+    if(n.eq.1 .or. n.eq.4) then
+        res = 0
+    else if(n.eq.1 .or. n.eq.3) then
+        res = 1
+    else
+        iloop: do i=1,k
+        
+            call random_number(a)
+            lr=2 
+            rr=n-2 
+            a=(rr-lr+1)*a
+            ! a = random_number(2,n-2)
+            if(power(a,n-1,n) .ne. 1) then
+                res = 0
+            end if
+        end do iloop
+        
+    end if
+    
+end function isPrime
+
+
+program main
+integer:: k 
+k=3
+if(isPrime(5,k).eq.1) then
+    print* ,"The number is not prime"
+else
+    print*, "The number is prime"
+end if
+end program

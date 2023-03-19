@@ -1,0 +1,100 @@
+FUNCTION power(x,y,p) result(res)
+ integer :: y,p,x
+ res=1
+
+ x = mod(x,p)
+    do while (y .gt. 0) 
+       
+        if ((y .and. 1).eq.1) THEN
+            res = mod((res * x), p)
+        ENDIF
+    
+        y = rshift(y,1)
+        x = mod((x * x) , p)
+    end do
+     
+END function
+
+FUNCTION miillerTest(d,n) result(a)
+INTEGER a1
+real :: r
+integer :: r1
+INTEGER x
+! a1=2 + random.randint(1, n - 4)
+
+a1=2 
+
+
+call random_seed()
+call random_number(r)
+
+a=1 
+b=n-4
+r1=(b-a+1)*r + a
+a1=a1+r1
+
+
+
+x=power(a1,d,n)
+if (x.EQ.1 .or. x.EQ.n - 1) then
+    a=1
+ENDIF
+do while (d .ne. n - 1) 
+        x = mod((x * x) ,n)
+        d = d* 2
+ 
+        if (x .EQ. 1) then
+            a=0
+        end if
+        if (x .EQ. n - 1) then 
+            a=1
+        end if
+            
+end do
+
+if(a.NE.1) then
+  a=0
+ENDIF
+
+END function miillerTest
+
+FUNCTION isPrime(n,k) result(ans)
+INTEGER d
+d=n-1
+
+if (n .le. 1 .or. n .eq. 4) THEN
+        ans=0
+ENDIF
+    if (n <= 3) THEN
+        ans=1
+ENDIF
+
+do while (mod(d, 2) .eq. 0) 
+        d = d // 2
+end do
+
+do 20 i = 1, k 
+              if(miillerTest(d, n).EQ.0) THEN
+                 ans=0
+                 exit 
+               ENDIF
+            20 continue
+ 
+if(ans.NE.0) then
+  ans=1
+ end if
+END function isPrime
+
+
+PROGRAM main
+          IMPLICIT NONE
+          INTEGER k
+          k=4
+        !   INTEGER :: isPrime
+            do 10 i = 1, 100 
+              if(isPrime(i,k).EQ.1) THEN
+                 print*, i 
+               ENDIF
+            10 continue
+            
+END PROGRAM

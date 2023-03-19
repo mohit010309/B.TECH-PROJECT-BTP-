@@ -1,0 +1,45 @@
+function fermatFactors(n) result(res)
+
+res=0 
+
+if(n.le.0) then
+    res=n 
+end if 
+
+if(mod(n,2).eq.0) then
+    res=n/2 
+end if 
+
+if(res.eq.0) then
+    a=ceiling(sqrt(real(n))) 
+    if(a*a.eq.n) then 
+        res=a 
+    else 
+        do while(1.eq.1) 
+            b1=(a*a)-n 
+            b=int(sqrt(real(b1)))
+            if(b*b.eq.b1) then 
+                exit
+            else 
+                a=a+1 
+            end if 
+        end do
+    end if 
+end if 
+
+if(res.ne.0) then
+    print*,res 
+    print*,6557/res 
+else 
+    print*,a+b 
+    print*,a-b
+end if
+
+end function fermatFactors
+
+program main
+
+integer::res
+res = fermatFactors(6557)
+
+end program

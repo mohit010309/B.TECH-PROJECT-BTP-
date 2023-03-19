@@ -1,0 +1,85 @@
+function gcd(a,b) result(ans) 
+    integer,intent(in) :: a 
+    integer,intent(in) :: b
+    
+    integer :: n1 , n2 
+    if(a.lt.b) then 
+        n1=b
+        n2=a 
+    else 
+        n1=a 
+        n2=b 
+    end if 
+    
+    DO                    
+      c = MOD(n1, n2)      
+      IF (c == 0) EXIT  
+      n1 = n2              
+      n2 = c              
+   END DO
+   ans = n2 
+end function gcd
+
+function isPrime(n) result(ans) 
+    integer , intent(in) :: n 
+    integer :: ans 
+    integer :: co=0 
+    integer :: i 
+    i=1
+    do while(i.le.n) 
+        if(mod(n,i).eq.0) then 
+            co=co+1 
+        end if 
+        i=i+1
+    end do
+    
+    if(co.eq.2) then 
+        ans=1 
+    else
+        ans=0 
+    end if 
+end function isPrime 
+
+function pollard(n) result(ans) 
+    integer :: a,i 
+    a = 2 
+    i = 2
+    do while(1.eq.1) 
+        a = mod(a**i,n) 
+        d = gcd(a-1,n) 
+        if(d.gt.1) then 
+            ans = d 
+            exit 
+        else 
+            i=i+1 
+        end if 
+    end do
+end function pollard
+
+program main
+
+integer :: n=1403 
+integer :: num 
+integer :: i  
+integer :: ans(1000) 
+integer :: r
+num = n 
+i = 1
+
+do while(1.eq.1) 
+    ! print*, i 
+    d  = pollard(num) 
+    ans(i) = d 
+    i = i + 1 
+    r = num / d 
+    if(isPrime(r).eq.1) then 
+        ans(i) = r 
+        exit 
+    else 
+        num=r 
+    end if 
+end do 
+
+print*,ans
+
+end program

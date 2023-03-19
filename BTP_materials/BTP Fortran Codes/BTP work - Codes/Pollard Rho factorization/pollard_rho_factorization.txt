@@ -1,0 +1,78 @@
+function gcd(a,b) result(ans)
+    integer :: a,b,ans
+    do 
+    r=mod(a,b)
+    a=b 
+    b=r 
+    if(b==0)exit
+    end do 
+   
+    ans=a
+end function gcd
+
+
+function modular_pow(base,exponent,modulus) result(res)
+    integer :: exponent,base,modulus
+    integer :: res
+    res = 1 
+    do while(exponent.gt.0) 
+        if(mod(exponent,2).eq.1) then 
+            res = res*base 
+            res = mod(res,modulus) 
+        end if 
+        exponent = rshift(exponent,1) 
+        base=base*base 
+        base=mod(base,modulus) 
+    end do 
+    
+end function modular_pow 
+
+recursive function pollardRho(n) result(ans) 
+    integer :: x,y,c,d 
+    real :: r
+     
+    if(n.eq.1) then 
+        ans=n 
+    end if 
+    
+    if(mod(n,2).eq.0) then 
+        ans=2 
+    end if 
+    
+    if(ans.ne.n .and. ans.ne.2) then 
+    
+        
+        call random_number(r)
+        x = (2-0+1)*r + 0
+        x = mod(x,n-2) 
+        
+        y = x 
+        call random_number(r) 
+        c = (1-0+1)*r + 0 
+        c = mod(c,n-1) 
+        
+        d = 1 
+        do while(d.eq.1) 
+            x = modular_pow(x,2,n) 
+            x = x + c + n 
+            x = mod(x,n) 
+            
+            y = modular_pow(y,2,n) 
+            y = y + c + n 
+            y = mod(y,n) 
+            
+            d = gcd(x-y,n) 
+            if(d.eq.n) then 
+                ans = pollardRho(n) 
+            end if 
+        end do 
+        
+        ans = d
+    end if 
+    
+end function pollardRho
+
+program main 
+    n = 25
+    print*,pollardRho(n) 
+end program 

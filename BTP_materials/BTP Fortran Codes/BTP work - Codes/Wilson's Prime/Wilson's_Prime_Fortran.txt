@@ -1,0 +1,37 @@
+recursive function fact(p) result(ans)
+    integer, intent(in) :: p 
+    
+    if(p<=1) then
+        ans=1 
+    else
+        ans=p*fact(p-1)
+    end if
+end function
+
+function isPrime(p) result(ans)
+    integer, intent(in) :: p
+    integer :: ans
+    integer :: p1
+    integer :: fans 
+    if(p==4) then
+        ans=0 
+    else
+        p1=rshift(p,1)
+        fans = fact(p1)
+        ans=mod(fans,p)
+    end if 
+end function
+
+program main
+    integer :: n 
+    
+    read*,n 
+    
+    if(isPrime(n)==0) then
+        print*, "The number is not prime"
+    else
+        print*, "The number is prime"
+    end if
+    
+  
+end program
